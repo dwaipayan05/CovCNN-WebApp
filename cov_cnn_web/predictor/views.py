@@ -99,6 +99,27 @@ def index(request):
         print('Confidence Score (Xception) : ', cf_score_xception)
         print('Prediction Time (Xception) : ', xception_exec)
         print("\n")
-        return render(request, 'index.html')
+        print(img_path)
+
+        response = {}
+        response['table'] = "table"
+        response['col0'] = " "
+        response['col1'] = "VGG16"
+        response['col2'] = "ResNet50"
+        response['col3'] = "Xception"
+        response['row1'] = "Results"
+        response['row2'] = "Confidence Score"
+        response['row3'] = "Prediction Time (s)"
+        response['r_pred'] = covid_pred[idx_resnet]
+        response['v_pred'] = covid_pred[idx_vgg]
+        response['x_pred'] = covid_pred[idx_xception]
+        response['r_cf'] = cf_score_resnet
+        response['v_cf'] = cf_score_vgg
+        response['x_cf'] = cf_score_xception 
+        response['r_time'] = resnet_exec
+        response['v_time'] = vgg_exec
+        response['x_time'] = xception_exec 
+        response['image'] = "../media/" + img.name
+        return render(request, 'index.html', response)
     else:
         return render(request, 'index.html')
